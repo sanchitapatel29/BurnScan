@@ -12,7 +12,21 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(
+          color: const Color(0xFFE1ECEE),
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x14003B3F),
+            blurRadius: 28,
+            offset: Offset(0, 14),
+          ),
+        ],
+      ),
       child: Padding(
         padding: padding,
         child: child,

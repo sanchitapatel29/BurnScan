@@ -4,6 +4,7 @@ import 'package:burn_scan/providers/image_workflow_provider.dart';
 import 'package:burn_scan/providers/patient_provider.dart';
 import 'package:burn_scan/screens/auth_screen.dart';
 import 'package:burn_scan/screens/home_screen.dart';
+import 'package:burn_scan/screens/splash_screen.dart';
 import 'package:burn_scan/services/auth_service.dart';
 import 'package:burn_scan/services/image_service.dart';
 import 'package:burn_scan/services/ml_service.dart';
@@ -46,7 +47,7 @@ class BurnScanApp extends StatelessWidget {
         title: 'BurnScan',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme(),
-        home: const AuthGate(),
+        home: const SplashScreen(),
       ),
     );
   }
