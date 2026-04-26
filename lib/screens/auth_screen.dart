@@ -417,12 +417,28 @@ class _AuthScreenState extends State<AuthScreen> {
 
     setState(() => _submitting = false);
 
-    if (success) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute<void>(
-          builder: (_) => const HomeScreen(),
+    if (!success) {
+      return;
+    }
+
+    if (_isSignup) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Account created. Please login to continue.'),
         ),
       );
+      setState(() {
+        _isSignup = false;
+        _passwordController.clear();
+        _confirmPasswordController.clear();
+      });
+      return;
     }
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(
+        builder: (_) => const HomeScreen(),
+      ),
+    );
   }
 }

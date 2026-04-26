@@ -101,7 +101,7 @@ class AppTheme {
           ),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         color: Colors.white,
         surfaceTintColor: Colors.white,

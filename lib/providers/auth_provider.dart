@@ -27,8 +27,15 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> initialize() async {
-    _isLoggedIn = await _authService.hasSession();
-    _currentUser = await _authService.getCurrentUser();
+    _error = null;
+    try {
+      _isLoggedIn = await _authService.hasSession();
+      _currentUser = await _authService.getCurrentUser();
+    } catch (_) {
+      _isLoggedIn = false;
+      _currentUser = null;
+      _error = 'Unable to restore the saved session.';
+    }
     _isReady = true;
     notifyListeners();
   }

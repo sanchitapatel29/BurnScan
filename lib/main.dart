@@ -16,6 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const BurnScanApp());
 }
 
