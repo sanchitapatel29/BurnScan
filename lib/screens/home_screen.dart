@@ -2,7 +2,7 @@ import 'package:burn_scan/providers/auth_provider.dart';
 import 'package:burn_scan/providers/editing_provider.dart';
 import 'package:burn_scan/providers/image_workflow_provider.dart';
 import 'package:burn_scan/providers/patient_provider.dart';
-import 'package:burn_scan/screens/auth_screen.dart';
+import 'package:burn_scan/screens/login_screen.dart';
 import 'package:burn_scan/screens/patient_details_screen.dart';
 import 'package:burn_scan/widgets/app_shell.dart';
 import 'package:burn_scan/widgets/home_action_tile.dart';
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
               return;
             }
             Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute<void>(builder: (_) => const AuthScreen()),
+              MaterialPageRoute<void>(builder: (_) => const LoginScreen()),
               (route) => false,
             );
           },

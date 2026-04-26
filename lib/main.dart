@@ -2,10 +2,11 @@ import 'package:burn_scan/providers/auth_provider.dart';
 import 'package:burn_scan/providers/editing_provider.dart';
 import 'package:burn_scan/providers/image_workflow_provider.dart';
 import 'package:burn_scan/providers/patient_provider.dart';
-import 'package:burn_scan/screens/auth_screen.dart';
 import 'package:burn_scan/screens/home_screen.dart';
+import 'package:burn_scan/screens/login_screen.dart';
 import 'package:burn_scan/screens/splash_screen.dart';
 import 'package:burn_scan/services/auth_service.dart';
+import 'package:burn_scan/services/database_service.dart';
 import 'package:burn_scan/services/image_service.dart';
 import 'package:burn_scan/services/ml_service.dart';
 import 'package:burn_scan/services/report_service.dart';
@@ -25,7 +26,10 @@ class BurnScanApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(create: (_) => AuthService()),
+        Provider(create: (_) => DatabaseService.instance),
+        Provider(
+          create: (context) => AuthService(context.read<DatabaseService>()),
+        ),
         Provider(create: (_) => ImageService()),
         Provider(create: (_) => const MLService()),
         Provider(create: (_) => ReportService()),
@@ -68,7 +72,7 @@ class AuthGate extends StatelessWidget {
 
         return authProvider.isLoggedIn
             ? const HomeScreen()
-            : const AuthScreen();
+            : const LoginScreen();
       },
     );
   }

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:burn_scan/providers/auth_provider.dart';
-import 'package:burn_scan/screens/auth_screen.dart';
 import 'package:burn_scan/screens/home_screen.dart';
+import 'package:burn_scan/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -70,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
       PageRouteBuilder<void>(
         transitionDuration: const Duration(milliseconds: 500),
         pageBuilder: (_, __, ___) =>
-            authProvider.isLoggedIn ? const HomeScreen() : const AuthScreen(),
+            authProvider.isLoggedIn ? const HomeScreen() : const LoginScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: CurvedAnimation(
