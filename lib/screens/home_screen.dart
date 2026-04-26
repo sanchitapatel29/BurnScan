@@ -4,6 +4,7 @@ import 'package:burn_scan/providers/image_workflow_provider.dart';
 import 'package:burn_scan/providers/patient_provider.dart';
 import 'package:burn_scan/screens/login_screen.dart';
 import 'package:burn_scan/screens/patient_details_screen.dart';
+import 'package:burn_scan/screens/reports_history_screen.dart';
 import 'package:burn_scan/widgets/app_shell.dart';
 import 'package:burn_scan/widgets/home_action_tile.dart';
 import 'package:flutter/material.dart';
@@ -163,7 +164,13 @@ class HomeScreen extends StatelessWidget {
                 HomeActionTile(
                   title: 'Saved Reports',
                   icon: Icons.folder_copy,
-                  onTap: () => _showPlaceholder(context),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const ReportsHistoryScreen(),
+                      ),
+                    );
+                  },
                 ),
                 HomeActionTile(
                   title: 'Body Map',

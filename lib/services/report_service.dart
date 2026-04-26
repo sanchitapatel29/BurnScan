@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:burn_scan/models/patient.dart';
 import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -61,7 +62,7 @@ class ReportService {
       ),
     );
 
-    final directory = await getApplicationDocumentsDirectory();
+    final directory = await getReportsDirectory();
     final output = File('${directory.path}/$fileName.pdf');
     await output.writeAsBytes(await pdf.save(), flush: true);
     return output;
@@ -86,10 +87,62 @@ class ReportService {
     final composed = img.Image.from(base);
     img.compositeImage(composed, resizedMask, blend: img.BlendMode.alpha);
 
-    final directory = await getApplicationDocumentsDirectory();
+    final directory = await getReportsDirectory();
     final output = File('${directory.path}/$fileName.png');
     await output.writeAsBytes(img.encodePng(composed), flush: true);
     return output;
+  }
+
+  Future<Directory> getReportsDirectory() async {
+    final documentsDirectory = await getApplicationDocumentsDirectory();
+    final reportsDirectory = Directory(
+      p.join(documentsDirectory.path, 'reports'),
+    );
+    if (!await reportsDirectory.exists()) {
+      await reportsDirectory.create(recursive: true);
+    }
+    return reportsDirectory;
+  }
+
+  Future<List<File>> listSavedPdfReports() async {
+    final directories = <Directory>[
+      await getReportsDirectory(),
+      await getApplicationDocumentsDirectory(),
+    ];
+    final seenPaths = <String>{};
+    final reports = <File>[];
+
+    for (final directory in directories) {
+      if (!await directory.exists()) {
+        continue;
+      }
+
+      await for (final entity in directory.list()) {
+        if (entity is! File) {
+          continue;
+        }
+        if (p.extension(entity.path).toLowerCase() != '.pdf') {
+          continue;
+        }
+        if (seenPaths.add(entity.path)) {
+          reports.add(entity);
+        }
+      }
+    }
+
+    reports.sort(
+      (first, second) => second
+          .statSync()
+          .modified
+          .compareTo(first.statSync().modified),
+    );
+    return reports;
+  }
+
+  Future<void> deleteReport(File file) async {
+    if (await file.exists()) {
+      await file.delete();
+    }
   }
 
   pw.TableRow _row(String label, String value) {

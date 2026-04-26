@@ -4,6 +4,7 @@ import 'package:burn_scan/models/report_file_type.dart';
 import 'package:burn_scan/providers/editing_provider.dart';
 import 'package:burn_scan/providers/image_workflow_provider.dart';
 import 'package:burn_scan/providers/patient_provider.dart';
+import 'package:burn_scan/screens/reports_history_screen.dart';
 import 'package:burn_scan/services/report_service.dart';
 import 'package:burn_scan/widgets/app_shell.dart';
 import 'package:burn_scan/widgets/info_card.dart';
@@ -212,6 +213,24 @@ class _DownloadScreenState extends State<DownloadScreen> {
                             label: const Text('Return Home'),
                           ),
                         ),
+                        if (success) ...[
+                          const SizedBox(height: 12),
+                          SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton.icon(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) =>
+                                        const ReportsHistoryScreen(),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.folder_copy_outlined),
+                              label: const Text('View Saved Reports'),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
             ),
